@@ -1,0 +1,93 @@
+QWidget {
+    background-color: #1d1d1d;
+    color: #ffffff;
+}
+
+QGroupBox {
+    border: 2px solid #337ab7;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+QLabel {
+    font-weight: bold;
+    color: #337ab7;
+}
+
+QLineEdit {
+    padding: 5px;
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    color: #ffffff;
+    background-color: #292929;
+}
+
+QPushButton {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #337ab7;
+    color: #ffffff;
+}
+
+QPushButton:hover {
+    background-color: #23527c;
+}
+
+QProgressBar {
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    height: 20px;
+}
+
+QProgressBar::chunk {
+    background-color: #337ab7;
+    width: 1px;
+}
+
+QTableWidget {
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+}
+
+QHeaderView::section {
+    background-color: #444444;
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+}
+
+QTableWidget QTableCornerButton::section {
+    background-color: #444444;
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    color: #ffffff;
+}
+
+QComboBox {
+    padding: 5px;
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    color: #ffffff;
+    background-color: #292929;
+}
+
+QSpinBox {
+    padding: 5px;
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    color: #ffffff;
+    background-color: #292929;
+}
+
+QDoubleSpinBox {
+    padding: 5px;
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    color: #ffffff;
+    background-color: #292929;
+}

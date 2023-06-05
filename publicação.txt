@@ -1,0 +1,94 @@
+Descrição do projeto: 
+
+Este projeto é uma aplicação de uma Calculadora de Queda de Tensão em circuitos elétricos, desenvolvida com a biblioteca PySide6 para a interface gráfica. Os usuários podem inserir os dados do circuito, como nome, tipo de ligação, tensão a montante, fator de potência, potência ativa, comprimento do condutor, número de trifólios, seção do condutor e material do cabo.
+
+Ao clicar no botão "Calcular", a aplicação realiza os cálculos necessários para determinar a potência aparente, corrente, tensão a jusante, queda percentual e queda em volts, com base nos dados fornecidos. Os resultados são exibidos na interface.
+
+A aplicação possui recursos extras, incluindo um histórico para salvar os cálculos realizados, exibido em uma tabela, e a opção de alternar entre diferentes temas visuais. Os dados do histórico também podem ser exportados para outros formatos.
+
+
+
+
+
+Instruções de Instalação
+Para usar o código, siga as instruções abaixo:
+1. Requisitos de Sistema
+
+    Python 3.x instalado em seu sistema.
+
+2. Clone o Repositório
+
+Clone o repositório do GitHub para o seu sistema:
+git clone https://github.com/seu-usuario/nome-do-repositorio.git
+
+
+3. Instale as Dependências
+
+Navegue até o diretório clonado e instale as dependências necessárias usando o pip (gerenciador de pacotes do Python):
+
+cd nome-do-repositorio
+pip install -r requirements.txt
+
+
+4. Execute o Código
+
+Para usuários Windows:
+
+Abra o prompt de comando e navegue até o diretório clonado. Execute o seguinte comando:
+
+python main.py
+
+
+Para usuários Linux:
+python3 main.py
+
+
+
+
+Uso:
+Para usar a Calculadora de Queda de Tensão, siga as instruções abaixo:
+
+  1  Após instalar e iniciar a aplicação, você verá uma interface gráfica simples com campos e botões.
+
+  2  Preencha os campos necessários para calcular a queda de tensão em um circuito. Os campos disponíveis são:
+        Nome: Insira como quer identificar este circuito.
+        Ligação: Insira aqui o esquema de ligação, mono, bi ou trifásico.
+        Tensão a montante (V): 
+        Fator de Potência: Cos φ Entre a potencia aparente e a potencia ativa.
+        Potência Ativa (W):
+        Comprimento do Fio (m): Insira o comprimento do fio ou condutor em metros (m).
+        Numero de trifólios: Numero de condutores parelelos por fase, exemplo:
+        3#95(95)T50 = 1 trifólio
+        4x [3#95(95)T50] = 4 trifólio
+        Seção do condutor (mm²)
+        Material do condutor:
+        Limite de queda de tensão: Esta função não interfere no calculo diretamente, 
+        
+
+ 3   Após preencher os campos, clique no botão "Calcular" para obter o resultado da queda de tensão.
+
+ 4  Os resultados serão exibidos informando as seguintes informações: 
+Potência aparente (VA).
+Corrente do circuito (A).
+Tensão a Jusante (V) que se refera a tensão disponibizida no ponto de conexão com a carga.
+Queda de tensão percentual.
+Queda de tensão em Volts.
+
+O grafico exibido 
+
+O resultado da queda de tensão será exibido no campo "Queda de Tensão (V)". Esse valor representa a tensão perdida ao longo do comprimento do fio ou condutor, devido à resistência do mesmo.
+
+    Se desejar realizar um novo cálculo, você pode limpar os campos preenchidos clicando no botão "Limpar".
+
+    Repita os passos 2 a 5 conforme necessário para calcular a queda de tensão em diferentes circuitos ou cenários.
+
+Certifique-se de usar as unidades corretas ao preencher os campos. Após obter o resultado da queda de tensão, você pode usar essa informação para avaliar o desempenho do circuito e tomar decisões adequadas para minimizar perdas de tensão indesejadas.
+
+Lembre-se de que a calculadora considera uma aproximação e pode não levar em conta outros fatores que possam afetar a queda de tensão, como a temperatura do condutor. Portanto, use os resultados como uma estimativa inicial e, se necessário, consulte outras fontes ou profissionais especializados para obter análises mais precisas.
+
+
+
+
+Estado do Projeto:
+
+O projeto está finalizado em sua versão atual, mas está aberto a melhorias futuras. Valorizamos o feedback dos usuários e estamos comprometidos em aprimorar a aplicação com base em suas sugestões. 
