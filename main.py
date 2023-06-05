@@ -60,6 +60,7 @@ class CalculoQuedaTensão(QWidget):
         self.fator_potência_edit.setMinimum(0)
         self.fator_potência_edit.setMaximum(1)
         self.fator_potência_edit.setSpecialValueText(" ")
+        self.fator_potência_edit.setDecimals(3)
 
         self.potência_ativa_edit = QDoubleSpinBox()
         self.potência_ativa_edit.setMaximum(999999999)
