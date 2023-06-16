@@ -36,7 +36,8 @@ class CalculoQuedaTensão(QWidget):
         # Labels de identificação dos campos de entrada
         self.nome_label = QLabel('Nome:')
         self.esquema_ligação_label = QLabel('Ligação:')
-        self.tensão_m_label = QLabel('Tensão a montante:')
+        self.tensão_entrada_label = QLabel('Tensão de Entrada:')
+        self.tensão_m_label = QLabel('Tensão a Montante:')
         self.fator_potência_label = QLabel('Fator de Potência:')
         self.potência_ativa_label = QLabel('Potência Ativa:')
         self.comprimento_condutor_label = QLabel('Comprimento do \nCondutor:')
@@ -51,6 +52,10 @@ class CalculoQuedaTensão(QWidget):
 
         self.esquema_ligação_combo = QComboBox()
         self.esquema_ligação_combo.addItems(['1FNT', '2FNT', '3FNT'])
+
+        self.tensão_entrada_edit = QDoubleSpinBox()
+        self.tensão_entrada_edit.setMaximum(999999999)
+        self.tensão_entrada_edit.setSpecialValueText(" ")
 
         self.tensão_m_edit = QDoubleSpinBox()
         self.tensão_m_edit.setMaximum(999999999)
@@ -119,29 +124,32 @@ class CalculoQuedaTensão(QWidget):
         input_layout.addWidget(self.esquema_ligação_label, 1, 0)
         input_layout.addWidget(self.esquema_ligação_combo, 1, 1)
 
-        input_layout.addWidget(self.tensão_m_label, 2, 0)
-        input_layout.addWidget(self.tensão_m_edit, 2, 1)
+        input_layout.addWidget(self.tensão_entrada_label, 2, 0)
+        input_layout.addWidget(self.tensão_entrada_edit, 2, 1)
 
-        input_layout.addWidget(self.fator_potência_label, 3, 0)
-        input_layout.addWidget(self.fator_potência_edit, 3, 1)
+        input_layout.addWidget(self.tensão_m_label, 3, 0)
+        input_layout.addWidget(self.tensão_m_edit, 3, 1)
 
-        input_layout.addWidget(self.potência_ativa_label, 4, 0)
-        input_layout.addWidget(self.potência_ativa_edit, 4, 1)
+        input_layout.addWidget(self.fator_potência_label, 4, 0)
+        input_layout.addWidget(self.fator_potência_edit, 4, 1)
 
-        input_layout.addWidget(self.comprimento_condutor_label, 5, 0)
-        input_layout.addWidget(self.comprimento_condutor_edit, 5, 1)
+        input_layout.addWidget(self.potência_ativa_label, 5, 0)
+        input_layout.addWidget(self.potência_ativa_edit, 5, 1)
 
-        input_layout.addWidget(self.numero_trifólios_label, 6, 0)
-        input_layout.addWidget(self.numero_trifólios_box, 6, 1)
+        input_layout.addWidget(self.comprimento_condutor_label, 6, 0)
+        input_layout.addWidget(self.comprimento_condutor_edit, 6, 1)
 
-        input_layout.addWidget(self.seção_condutor_label, 7, 0)
-        input_layout.addWidget(self.seção_condutor_combo, 7, 1)
+        input_layout.addWidget(self.numero_trifólios_label, 7, 0)
+        input_layout.addWidget(self.numero_trifólios_box, 7, 1)
 
-        input_layout.addWidget(self.material_cabo_label, 8, 0)
-        input_layout.addWidget(self.material_cabo_combo, 8, 1)
+        input_layout.addWidget(self.seção_condutor_label, 8, 0)
+        input_layout.addWidget(self.seção_condutor_combo, 8, 1)
 
-        input_layout.addWidget(self.limite_queda_label, 9, 0)
-        input_layout.addWidget(self.limite_queda_combo, 9, 1)
+        input_layout.addWidget(self.material_cabo_label, 9, 0)
+        input_layout.addWidget(self.material_cabo_combo, 9, 1)
+
+        input_layout.addWidget(self.limite_queda_label, 10, 0)
+        input_layout.addWidget(self.limite_queda_combo, 10, 1)
 
 
         input_group.setLayout(input_layout)
@@ -159,8 +167,8 @@ class CalculoQuedaTensão(QWidget):
         self.potência_aparente = QLabel('Potência Aparente:  ')
         self.corrente_label = QLabel('Corrente:  ')
         self.tensão_jusante = QLabel('Tensão a Jusante:  ')
-        self.queda_100_label = QLabel('Queda \u0394%:  ')
-        self.queda_v_label = QLabel('Queda \u0394V:  ')
+        self.queda_100_label = QLabel('\u0394% Parcial:  ')
+        self.queda_somada_label = QLabel('\u0394% Acumulada:  ')
         self.queda_barra = QLabel('Limite:  ')
 
 
@@ -170,7 +178,7 @@ class CalculoQuedaTensão(QWidget):
         self.corrente_label_output = QLabel()
         self.tensão_jusante_output = QLabel()
         self.queda_100_label_output = QLabel()
-        self.queda_v_label_output = QLabel()
+        self.queda_somada_output = QLabel()
         self.queda_barra_output = QProgressBar()
         self.queda_barra_output.setFormat('')
 
@@ -191,8 +199,8 @@ class CalculoQuedaTensão(QWidget):
         output_layout.addWidget(self.queda_100_label, 3, 0)
         output_layout.addWidget(self.queda_100_label_output, 3, 1)
 
-        output_layout.addWidget(self.queda_v_label, 4, 0)
-        output_layout.addWidget(self.queda_v_label_output, 4, 1)
+        output_layout.addWidget(self.queda_somada_label, 4, 0)
+        output_layout.addWidget(self.queda_somada_output, 4, 1)
 
         output_layout.addWidget(self.queda_barra, 5, 0)
         output_layout.addWidget(self.queda_barra_output, 5, 1)
@@ -235,8 +243,8 @@ class CalculoQuedaTensão(QWidget):
             'Seção',
             'Material\ndo Cabo',
             'Corrente',
-            'Queda \u0394%',
-            'Queda \u0394V',
+            '\u0394% Parcial',
+            '\u0394% Total',
             'Tensão\nFinal']
         )
         header = self.histórico_table.horizontalHeader()
@@ -291,9 +299,12 @@ class CalculoQuedaTensão(QWidget):
     def calcular_queda_tensão(self):
         nome = self.nome_edit.text()
         ligação = self.esquema_ligação_combo.currentText()
-        tensão_alimentação = self.tensão_m_edit.value()
+        tensão_entrada = self.tensão_entrada_edit.value()
+        tensão_montante = self.tensão_m_edit.value()
         fp = self.fator_potência_edit.value()
         pot_w = self.potência_ativa_edit.value()
+        pot_va = pot_w / fp
+        impedância = (tensão_entrada ** 2) / (pot_w / fp)
         dist = self.comprimento_condutor_edit.value()
         n_trifólios = self.numero_trifólios_box.value()
         bitola = float(self.seção_condutor_combo.currentText())
@@ -310,22 +321,23 @@ class CalculoQuedaTensão(QWidget):
 
         if ligação == "1FNT" or ligação =="2FNT":
             fator_k = 200
-            corrente = ((pot_w / fp) / tensão_alimentação)
+            corrente = tensão_montante / impedância
 
         else:
             fator_k = 173.2
-            corrente = ((pot_w / fp) / (tensão_alimentação * 1.73205080757))
+            corrente =  (tensão_montante * 1.73205080757) / impedância     
 
-        queda_100 = ((fator_k * resistividade * dist * corrente) / ((n_trifólios * bitola) * tensão_alimentação))
-        queda_v = (tensão_alimentação * (queda_100 / 100))
-        tensão_jusante = tensão_alimentação - queda_v
-        potência_aparente = pot_w / fp
+        queda_100 = ((fator_k * resistividade * dist * corrente) / ((n_trifólios * bitola) * tensão_montante))
+        queda_v = (tensão_montante * (queda_100 / 100))
+        tensão_jusante = tensão_montante - queda_v
 
-        self.potência_aparente_output.setText("{:.2f} VA".format(potência_aparente))
+        queda_somada = ((tensão_entrada - tensão_jusante) * 100) / tensão_entrada
+
+        self.potência_aparente_output.setText("{:.2f} VA".format(pot_va))
         self.corrente_label_output.setText("{:.2f} A".format(corrente))
         self.tensão_jusante_output.setText("{:.2f} V".format(tensão_jusante))
         self.queda_100_label_output.setText("{:.2f} %".format(queda_100))
-        self.queda_v_label_output.setText("{:.2f} V".format(queda_v))
+        self.queda_somada_output.setText("{:.2f} %".format(queda_somada))
 
         self.queda_barra_output.setRange(0, (limite_qt))
         self.queda_barra_output.setValue(queda_100)
@@ -360,24 +372,25 @@ class CalculoQuedaTensão(QWidget):
         row_count = self.histórico_table.rowCount()
         nome = self.nome_edit.text()
         ligação = self.esquema_ligação_combo.currentText()
-        tensão_alimentação = str(self.tensão_m_edit.value()) + ' V'
+        tensão_entrada = str(self.tensão_entrada_edit.value()) + ' V'
+        tensão_montante = str(self.tensão_m_edit.value()) + ' V'
         fp = str(self.fator_potência_edit.value())
         pot_w = str(self.potência_ativa_edit.value()) + ' W'
+        potência_aparente = self.potência_aparente_output.text()
         dist = str(self.comprimento_condutor_edit.value()) + ' m'
         n_trifólios = str(self.numero_trifólios_box.value()) + ' x'
         bitola = str(self.seção_condutor_combo.currentText()) + ' mm²'
         cabo = self.material_cabo_combo.currentText()
         corrente = self.corrente_label_output.text()
         queda_100 = self.queda_100_label_output.text()
-        queda_v = self.queda_v_label_output.text()
+        queda_somada = self.queda_somada_output.text()
         tensão_jusante = self.tensão_jusante_output.text()
-        potência_aparente = self.potência_aparente_output.text()
 
         # Inserção de colunas 
         self.histórico_table.insertRow(row_count)
         self.histórico_table.setItem(row_count, 0, QTableWidgetItem(nome))
         self.histórico_table.setItem(row_count, 1, QTableWidgetItem(ligação))
-        self.histórico_table.setItem(row_count, 2, QTableWidgetItem(tensão_alimentação))
+        self.histórico_table.setItem(row_count, 2, QTableWidgetItem(tensão_entrada))
         self.histórico_table.setItem(row_count, 3, QTableWidgetItem(fp))
         self.histórico_table.setItem(row_count, 4, QTableWidgetItem(pot_w))
         self.histórico_table.setItem(row_count, 5, QTableWidgetItem(potência_aparente))
@@ -387,7 +400,7 @@ class CalculoQuedaTensão(QWidget):
         self.histórico_table.setItem(row_count, 9, QTableWidgetItem(cabo))
         self.histórico_table.setItem(row_count, 10, QTableWidgetItem(corrente))
         self.histórico_table.setItem(row_count, 11, QTableWidgetItem(queda_100))
-        self.histórico_table.setItem(row_count, 12, QTableWidgetItem(queda_v))
+        self.histórico_table.setItem(row_count, 12, QTableWidgetItem(queda_somada))
         self.histórico_table.setItem(row_count, 13, QTableWidgetItem(tensão_jusante))
 
     
