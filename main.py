@@ -1,9 +1,5 @@
 import sys
-import os
-import re
 import openpyxl
-from PySide6.QtCore import QFile
-from PySide6.QtGui import QIntValidator, QPalette, QColor
 from PySide6.QtWidgets import (
     QApplication, QLabel, QLineEdit, QPushButton,
     QGridLayout, QTableWidget, QTableWidgetItem,
@@ -15,9 +11,7 @@ from PySide6.QtWidgets import (
 css_file = 'style1.css'
 
 
-
-
-#/////////////////////////////////////////////////////////////////////////////////
+# ////////////////////////////////////////////////////////////////////////////////
 # Criando a classe principal
 
 class CalculoQuedaTensão(QWidget):
@@ -25,14 +19,12 @@ class CalculoQuedaTensão(QWidget):
         super().__init__()
         self.setWindowTitle('Calculadora \u0394V')
 
-
-        #////////////////////////////////////////////////////////////////////////
-        #------------------------------------------------------------------------
+        # ////////////////////////////////////////////////////////////////////////
+        # ------------------------------------------------------------------------
         # Grupo para os campos de entrada do usuário
         input_group = QGroupBox('Dados do Circuito')
 
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Labels de identificação dos campos de entrada
         self.nome_label = QLabel('Nome:')
         self.esquema_ligação_label = QLabel('Ligação:')
@@ -46,7 +38,7 @@ class CalculoQuedaTensão(QWidget):
         self.material_cabo_label = QLabel('Material do Condutor:')
         self.limite_queda_label = QLabel('Limite \u0394V')
 
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Campos de entrada
         self.nome_edit = QLineEdit()
 
@@ -106,15 +98,14 @@ class CalculoQuedaTensão(QWidget):
                 '1000'
             ]
         )
-        
+
         self.material_cabo_combo = QComboBox()
         self.material_cabo_combo.addItems(['Cobre', 'Alumínio'])
-        
+
         self.limite_queda_combo = QComboBox()
         self.limite_queda_combo.addItems(['4%', '7%'])
 
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Posicionamento e organização do grupo de entrada
         input_layout = QGridLayout()
 
@@ -151,18 +142,14 @@ class CalculoQuedaTensão(QWidget):
         input_layout.addWidget(self.limite_queda_label, 10, 0)
         input_layout.addWidget(self.limite_queda_combo, 10, 1)
 
-
         input_group.setLayout(input_layout)
 
-
-
-        #////////////////////////////////////////////////////////////////////////
-        #------------------------------------------------------------------------
+        # ////////////////////////////////////////////////////////////////////////
+        # ------------------------------------------------------------------------
         # Grupo para os campos de saída do programa
         output_group = QGroupBox('Resultados')
 
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Labels de identificação dos campos de saída
         self.potência_aparente = QLabel('Potência Aparente:  ')
         self.corrente_label = QLabel('Corrente:  ')
@@ -171,8 +158,7 @@ class CalculoQuedaTensão(QWidget):
         self.queda_somada_label = QLabel('\u0394% Acumulada:  ')
         self.queda_barra = QLabel('Limite:  ')
 
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Campos de saída
         self.potência_aparente_output = QLabel()
         self.corrente_label_output = QLabel()
@@ -182,14 +168,13 @@ class CalculoQuedaTensão(QWidget):
         self.queda_barra_output = QProgressBar()
         self.queda_barra_output.setFormat('')
 
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Posicionamento e organização do grupo de saída
         output_layout = QGridLayout()
 
         output_layout.addWidget(self.potência_aparente, 0, 0)
         output_layout.addWidget(self.potência_aparente_output, 0, 1)
-        
+
         output_layout.addWidget(self.corrente_label, 1, 0)
         output_layout.addWidget(self.corrente_label_output, 1, 1)
 
@@ -207,8 +192,7 @@ class CalculoQuedaTensão(QWidget):
 
         output_group.setLayout(output_layout)
 
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Configurações dos botões
         self.calcular_button = QPushButton("Calcular")
         self.calcular_button.clicked.connect(self.calcular_queda_tensão)
@@ -226,35 +210,32 @@ class CalculoQuedaTensão(QWidget):
         self.tema_button = QPushButton('Tema')
         self.tema_button.clicked.connect(self.trocar_estilo)
 
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Tabela de histórico
         self.histórico_table = QTableWidget()
         self.histórico_table.hide()
         self.histórico_table.setColumnCount(14)
         self.histórico_table.setHorizontalHeaderLabels(
-            ['Nome', 
-            'Ligação', 
-            'V Montante', 
-            'Fator de\nPotência', 
-            'Potência\nAtiva',
-            'Potência\n Aparente',
-            'Comprimento\ndo Condutor',
-            'Nº de\nTrifólios',
-            'Seção',
-            'Material\ndo Cabo',
-            'Corrente',
-            '\u0394% Parcial',
-            '\u0394% Total',
-            'Tensão\nFinal']
+            ['Nome',
+                'Ligação',
+                'V Montante',
+                'Fator de\nPotência',
+                'Potência\nAtiva',
+                'Potência\n Aparente',
+                'Comprimento\ndo Condutor',
+                'Nº de\nTrifólios',
+                'Seção',
+                'Material\ndo Cabo',
+                'Corrente',
+                '\u0394% Parcial',
+                '\u0394% Total',
+                'Tensão\nFinal']
         )
         header = self.histórico_table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)
-        
-        
 
-        
-        #////////////////////////////////////////////////////////////////////////
-        #------------------------------------------------------------------------
+        # ////////////////////////////////////////////////////////////////////////
+        # ------------------------------------------------------------------------
         # Layout principal
         layout = QVBoxLayout()
         layout.addWidget(input_group)
@@ -262,8 +243,7 @@ class CalculoQuedaTensão(QWidget):
         layout.addWidget(self.calcular_button)
         layout.addWidget(self.salvar_button)
 
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Layout secundário para os botões
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.tema_button)
@@ -271,33 +251,32 @@ class CalculoQuedaTensão(QWidget):
         button_layout.addWidget(self.exportar_button)
         layout.addLayout(button_layout)
 
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Configura a quantidade de linhas visíveis na tabela
         num_linhas_visíveis = 8  # Altere o número de linhas visíveis aqui
-        altura_linha = self.histórico_table.verticalHeader().defaultSectionSize()
+        altura_linha = self.histórico_table.verticalHeader().\
+            defaultSectionSize()
+
         altura_tabela = num_linhas_visíveis * altura_linha
         self.histórico_table.setFixedHeight(altura_tabela)
 
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Adicionar tabela de histórico
         layout.addWidget(self.histórico_table)
 
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Definir altura fixa para o layout principal
         layout.setContentsMargins(10, 10, 10, 10)
         layout.setSpacing(10)
         self.setLayout(layout)
         self.setFixedHeight(self.minimumSizeHint().height())
 
-
-    #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    #------------------------------------------------------------------------------------------------------------------
+    # ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    # ------------------------------------------------------------------------------------------------------------------
     # Funções
 
     # Função de calculo principal
     def calcular_queda_tensão(self):
-        nome = self.nome_edit.text()
         ligação = self.esquema_ligação_combo.currentText()
         tensão_entrada = self.tensão_entrada_edit.value()
         tensão_montante = self.tensão_m_edit.value()
@@ -319,19 +298,22 @@ class CalculoQuedaTensão(QWidget):
         else:
             resistividade = 0.0292056074766355
 
-        if ligação == "1FNT" or ligação =="2FNT":
+        if ligação == "1FNT" or ligação == "2FNT":
             fator_k = 200
             corrente = tensão_montante / impedância
 
         else:
             fator_k = 173.2
-            corrente =  (tensão_montante * 1.73205080757) / impedância     
+            corrente = (tensão_montante * 1.73205080757) / impedância
 
-        queda_100 = ((fator_k * resistividade * dist * corrente) / ((n_trifólios * bitola) * tensão_montante))
+        queda_100 = ((fator_k * resistividade * dist * corrente) /
+                     ((n_trifólios * bitola) * tensão_montante))
+
         queda_v = (tensão_montante * (queda_100 / 100))
         tensão_jusante = tensão_montante - queda_v
 
-        queda_somada = ((tensão_entrada - tensão_jusante) * 100) / tensão_entrada
+        queda_somada = ((tensão_entrada - tensão_jusante)
+                        * 100) / tensão_entrada
 
         self.potência_aparente_output.setText("{:.2f} VA".format(pot_va))
         self.corrente_label_output.setText("{:.2f} A".format(corrente))
@@ -342,12 +324,13 @@ class CalculoQuedaTensão(QWidget):
         self.queda_barra_output.setRange(0, (limite_qt))
         self.queda_barra_output.setValue(queda_100)
         if queda_100 > limite_qt:
-            self.queda_barra_output.setStyleSheet("QProgressBar::chunk { background-color: red; }")
+            self.queda_barra_output.setStyleSheet(
+                "QProgressBar::chunk { background-color: red; }")
         else:
-            self.queda_barra_output.setStyleSheet("QProgressBar::chunk { background-color: #337ab7; }")
+            self.queda_barra_output.setStyleSheet(
+                "QProgressBar::chunk { background-color: #337ab7; }")
 
-            
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Função para trocar o arquivo CSS carregado
     def trocar_estilo(self):
         global css_file
@@ -363,9 +346,8 @@ class CalculoQuedaTensão(QWidget):
             estilo = file.read()
         app.setStyleSheet(estilo)
 
-
-    #------------------------------------------------------------------------------------------------------------------
-    #Função para salvar os cálculos na tabela de histórico
+    # ------------------------------------------------------------------------------------------------------------------
+    # Função para salvar os cálculos na tabela de histórico
 
     # declaração de variáveis
     def salvar_tabela(self):
@@ -373,7 +355,6 @@ class CalculoQuedaTensão(QWidget):
         nome = self.nome_edit.text()
         ligação = self.esquema_ligação_combo.currentText()
         tensão_entrada = str(self.tensão_entrada_edit.value()) + ' V'
-        tensão_montante = str(self.tensão_m_edit.value()) + ' V'
         fp = str(self.fator_potência_edit.value())
         pot_w = str(self.potência_ativa_edit.value()) + ' W'
         potência_aparente = self.potência_aparente_output.text()
@@ -386,25 +367,35 @@ class CalculoQuedaTensão(QWidget):
         queda_somada = self.queda_somada_output.text()
         tensão_jusante = self.tensão_jusante_output.text()
 
-        # Inserção de colunas 
+        # Inserção de colunas
         self.histórico_table.insertRow(row_count)
         self.histórico_table.setItem(row_count, 0, QTableWidgetItem(nome))
         self.histórico_table.setItem(row_count, 1, QTableWidgetItem(ligação))
-        self.histórico_table.setItem(row_count, 2, QTableWidgetItem(tensão_entrada))
+        self.histórico_table.setItem(row_count, 2, QTableWidgetItem
+                                     (tensão_entrada))
+
         self.histórico_table.setItem(row_count, 3, QTableWidgetItem(fp))
         self.histórico_table.setItem(row_count, 4, QTableWidgetItem(pot_w))
-        self.histórico_table.setItem(row_count, 5, QTableWidgetItem(potência_aparente))
+        self.histórico_table.setItem(row_count, 5, QTableWidgetItem
+                                     (potência_aparente))
+
         self.histórico_table.setItem(row_count, 6, QTableWidgetItem(dist))
-        self.histórico_table.setItem(row_count, 7, QTableWidgetItem(n_trifólios))
+        self.histórico_table.setItem(row_count, 7, QTableWidgetItem
+                                     (n_trifólios))
+
         self.histórico_table.setItem(row_count, 8, QTableWidgetItem(bitola))
         self.histórico_table.setItem(row_count, 9, QTableWidgetItem(cabo))
         self.histórico_table.setItem(row_count, 10, QTableWidgetItem(corrente))
-        self.histórico_table.setItem(row_count, 11, QTableWidgetItem(queda_100))
-        self.histórico_table.setItem(row_count, 12, QTableWidgetItem(queda_somada))
-        self.histórico_table.setItem(row_count, 13, QTableWidgetItem(tensão_jusante))
+        self.histórico_table.setItem(row_count, 11, QTableWidgetItem
+                                     (queda_100))
 
-    
-    #------------------------------------------------------------------------------------------------------------------
+        self.histórico_table.setItem(row_count, 12, QTableWidgetItem
+                                     (queda_somada))
+
+        self.histórico_table.setItem(row_count, 13, QTableWidgetItem
+                                     (tensão_jusante))
+
+    # ------------------------------------------------------------------------------------------------------------------
     # Muda a visibilidade da área da tabela de histórico
     def toggle_histórico(self):
         if self.histórico_table.isVisible():
@@ -414,7 +405,7 @@ class CalculoQuedaTensão(QWidget):
             self.histórico_table.show()
             self.setFixedHeight(self.minimumSizeHint().height())
 
-    #------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
     # Exporta a tabela para um arquivo
     def exportar_tabela(self):
         # Criar um novo arquivo Excel
@@ -447,7 +438,8 @@ class CalculoQuedaTensão(QWidget):
         file_dialog.setDefaultSuffix("xlsx")
         options = QFileDialog.Options()
         file_path, _ = file_dialog.getSaveFileName(
-            None, "Salvar Arquivo", "", "Arquivos Excel (*.xlsx)", options=options
+            None, "Salvar Arquivo", "", "Arquivos Excel (*.xlsx)",
+            options=options
         )
 
         if file_path:
@@ -455,22 +447,17 @@ class CalculoQuedaTensão(QWidget):
             workbook.save(file_path)
 
 
-
-
-
-
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     # Carregar o arquivo CSS externo
-    #with open('styles/style1.css', 'r') as file:
+    # with open('styles/style1.css', 'r') as file:
     #    estilo = file.read()
     with open(f'styles/{css_file}', 'r') as file:
         estilo = file.read()
     app.setStyleSheet(estilo)
- 
-    #app.setStyleSheet(estilo)
+
+    # app.setStyleSheet(estilo)
 
     window = CalculoQuedaTensão()
     window.show()
