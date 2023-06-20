@@ -283,7 +283,16 @@ class CalculoQuedaTensão(QWidget):
         fp = self.fator_potência_edit.value()
         pot_w = self.potência_ativa_edit.value()
         pot_va = pot_w / fp
-        impedância = (tensão_entrada ** 2) / (pot_w / fp)
+        if ligação == "1FNT" or ligação == "2FNT":
+            fator_k = 200
+            impedância = (tensão_entrada ** 2) / (pot_w / fp)
+            corrente = tensão_montante / impedância
+
+        else:
+            fator_k = 173.2
+            impedância = ((tensão_entrada * 1.73205080757) ** 2) / (pot_w / fp)
+            corrente = (tensão_montante * 1.73205080757) / impedância       
+
         dist = self.comprimento_condutor_edit.value()
         n_trifólios = self.numero_trifólios_box.value()
         bitola = float(self.seção_condutor_combo.currentText())
@@ -297,14 +306,6 @@ class CalculoQuedaTensão(QWidget):
             resistividade = 0.0178571428571429
         else:
             resistividade = 0.0292056074766355
-
-        if ligação == "1FNT" or ligação == "2FNT":
-            fator_k = 200
-            corrente = tensão_montante / impedância
-
-        else:
-            fator_k = 173.2
-            corrente = (tensão_montante * 1.73205080757) / impedância
 
         queda_100 = ((fator_k * resistividade * dist * corrente) /
                      ((n_trifólios * bitola) * tensão_montante))
