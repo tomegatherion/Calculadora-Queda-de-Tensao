@@ -291,7 +291,7 @@ class CalculoQuedaTensão(QWidget):
         else:
             fator_k = 173.2
             impedância = ((tensão_entrada * 1.73205080757) ** 2) / (pot_w / fp)
-            corrente = (tensão_montante * 1.73205080757) / impedância       
+            corrente = (tensão_montante * 1.73205080757) / impedância
 
         dist = self.comprimento_condutor_edit.value()
         n_trifólios = self.numero_trifólios_box.value()
