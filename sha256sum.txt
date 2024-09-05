@@ -1,0 +1,3 @@
+4995427da5a17c3fd0fd1db2d2e0b698bfd5a1720925fd9256985fbe0aabacd2  C:/Users/MDE/Downloads/Calculadora-Queda-de-Tensao-main/Calculadora-Queda-de-Tensao-main/main.py
+2e996a62f925bb874d521dae7018212e03640486e50c5604b1535ddf6035dafa  C:/Users/MDE/Downloads/Calculadora-Queda-de-Tensao-main/Calculadora-Queda-de-Tensao-main/publicação.txt
+1d144df7d695c17f058c5fcf2186e22acd70301929c4e597b1c663266e3972c4  C:/Users/MDE/Downloads/Calculadora-Queda-de-Tensao-main/Calculadora-Queda-de-Tensao-main/requirements.txt
